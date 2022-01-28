@@ -11,6 +11,9 @@ export const MakeaBLEProvider = (props) => {
     const [labelTabSelected, changeLabelTabState] = useState(false); // Is data labeling tab selected?
 
     const [currentData, setData] = useState([]) // Data stored from simulation or from "Open Project"
+    const [light, setLight] = useState("NAN")
+    const [pressure, setPressure] = useState("NAN")
+    const [temperature, setTemperature] = useState("NAN")
 
     return (
         <MakeaBLEContext.Provider value={
@@ -19,7 +22,10 @@ export const MakeaBLEProvider = (props) => {
                 aiTabSelected: [aiTabSelected, changeAITabState], 
                 projTabSelected: [projTabSelected, changeProjTabState],
                 labelTabSelected: [labelTabSelected, changeLabelTabState],
-                currentData : [currentData, setData]
+                currentData : [currentData, setData],
+                temperature : [temperature, setTemperature],
+                pressure: [pressure, setPressure],
+                light: [light, setLight]
             }
         }>
             {props.children}

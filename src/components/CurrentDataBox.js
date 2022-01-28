@@ -1,13 +1,23 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import EnvBox from "./EnvBox";
 import ProxSensorBox from "./ProxSensorBox";
 
 function CurrentDataBox(props) {
+
+  const [dateTime, setDateTime] = useState(new Date());
+
+  useEffect(() => {
+    const id = setInterval(() => setDateTime(new Date()), 1000);
+    return () => {
+        clearInterval(id);
+    }
+  }, []);
+
   return (
     <Container {...props}>
       <Rect6>
-        <Time>Time: 2022/01/12 12:15:14 PM</Time>
+        <Time>Time: {dateTime.toLocaleString()}</Time>
         <EnvBox
           style={{
             height: 107,

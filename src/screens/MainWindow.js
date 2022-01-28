@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useContext, useEffect } from "react";
 import styled, { css } from "styled-components";
 import ProjectTab from "../components/ProjectTab";
 import LabelTab from "../components/LabelTab";
@@ -7,15 +7,34 @@ import DeviceControlBox from "../components/DeviceControlBox";
 import CurrentDataBox from "../components/CurrentDataBox";
 import Footer from "../components/Footer";
 import { useHistory } from 'react-router-dom';
-
+import Papa from "papaparse";
 
 import "../App.css";
 import DataTable from "../components/DataTable";
-import {MakeaBLEProvider} from "../contexts/MakeaBLEContext";
+import {MakeaBLEContext} from "../contexts/MakeaBLEContext";
 
 function MainWindow(props) {
   const project_name = "Fall-01";
   let history = useHistory ();
+
+  const { currentData, temperature, pressure, light } = useContext(MakeaBLEContext);
+  const [_data, setData] = currentData;
+  const [_temp, setTemp] = temperature;
+  const [_press, setPress] = pressure;
+  const [_light, setLight] = light;
+
+  useEffect(() => {
+    Papa.parse("./Projects/Fall-01/Data/dataset_new.csv", {
+        download: true,
+        header: true,
+        complete: data => {
+          setData(data.data);
+          setTemp(data.data[data.data.length-1].TEMPERATURE);
+          setPress(data.data[data.data.length-1].PRESSURE);
+          setLight(data.data[data.data.length-1].AMB_LIGHT);
+        }
+      });
+  }, [])
 
   const gotoLabels = () => {
     history.push ('./MainWindowLabels');
@@ -26,7 +45,6 @@ function MainWindow(props) {
   }
 
   return (
-    <MakeaBLEProvider>
     <Container>
       <RectColumn>
         <Rect>
@@ -65,6 +83,7 @@ function MainWindow(props) {
                   }}
                 ></DeviceControlBox>
                 <CurrentDataBox
+                  data={_data}
                   style={{
                     width: 336,
                     height: 396,
@@ -86,7 +105,6 @@ function MainWindow(props) {
         }}
       ></Footer>
     </Container>
-    </MakeaBLEProvider>
   );
 }
 

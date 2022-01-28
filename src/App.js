@@ -6,10 +6,12 @@ import MainWindowAi from "./screens/MainWindowAi";
 import MainWindowLabels from "./screens/MainWindowLabels";
 
 
+import {MakeaBLEProvider} from "./contexts/MakeaBLEContext";
 import "./style.css";
 
 function App() {
   return (
+    <MakeaBLEProvider>
     <Router >
       <Switch>
       <Route path="/" exact component={MainWindow} />
@@ -18,6 +20,7 @@ function App() {
       <Route path="/MainWindowLabels/" exact component={MainWindowLabels} />
       </Switch>
     </Router>
+    </MakeaBLEProvider>
   );
 }
 

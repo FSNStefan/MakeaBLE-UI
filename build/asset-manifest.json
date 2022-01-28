@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6d6ec204.chunk.css",
+    "main.js": "/static/js/main.29ff4713.chunk.js",
+    "main.js.map": "/static/js/main.29ff4713.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/css/2.7be791b5.chunk.css": "/static/css/2.7be791b5.chunk.css",
+    "static/js/2.f4162905.chunk.js": "/static/js/2.f4162905.chunk.js",
+    "static/js/2.f4162905.chunk.js.map": "/static/js/2.f4162905.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.6f8be058d2828934e044845d60e853a5.js": "/precache-manifest.6f8be058d2828934e044845d60e853a5.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.7be791b5.chunk.css.map": "/static/css/2.7be791b5.chunk.css.map",
+    "static/css/main.6d6ec204.chunk.css.map": "/static/css/main.6d6ec204.chunk.css.map",
+    "static/media/Entypo.ttf": "/static/media/Entypo.744ce600.ttf",
+    "static/media/EvilIcons.ttf": "/static/media/EvilIcons.140c53a7.ttf",
+    "static/media/Feather.ttf": "/static/media/Feather.ca9ce9ff.ttf",
+    "static/media/FontAwesome.ttf": "/static/media/FontAwesome.b06871f2.ttf",
+    "static/media/Ionicons.ttf": "/static/media/Ionicons.b2e0fc82.ttf",
+    "static/media/MaterialCommunityIcons.ttf": "/static/media/MaterialCommunityIcons.6acc7d6c.ttf",
+    "static/media/MaterialIcons.ttf": "/static/media/MaterialIcons.a37b0c01.ttf",
+    "static/media/Octicons.ttf": "/static/media/Octicons.8e7f807e.ttf",
+    "static/media/SimpleLineIcons.ttf": "/static/media/SimpleLineIcons.d2285965.ttf",
+    "static/media/style.css": "/static/media/roboto-regular.f36638c2.ttf"
+  }
+}

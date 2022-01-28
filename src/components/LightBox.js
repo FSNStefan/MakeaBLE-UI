@@ -1,8 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import styled, { css } from "styled-components";
 import EntypoIcon from "react-native-vector-icons/dist/Entypo";
+import {MakeaBLEContext} from "../contexts/MakeaBLEContext";
 
 function LightBox(props) {
+
+  const { light } = useContext(MakeaBLEContext);
+  const [_light, setLight] = light;
+
   return (
     <Container {...props}>
       <Rect10>
@@ -17,7 +22,7 @@ function LightBox(props) {
             marginLeft: 25
           }}
         ></EntypoIcon>
-        <LoremIpsum2>100</LoremIpsum2>
+        <LoremIpsum2>{_light}</LoremIpsum2>
       </Rect10>
     </Container>
   );
@@ -44,7 +49,7 @@ const LoremIpsum2 = styled.span`
   font-size: 21px;
   text-align: center;
   margin-top: 1px;
-  margin-left: 22px;
+  margin-left: 5px;
 `;
 
 export default LightBox;

@@ -1,8 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, useContext} from "react";
 import styled, { css } from "styled-components";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
+import {MakeaBLEContext} from "../contexts/MakeaBLEContext";
 
 function TempBox(props) {
+
+  const { temperature } = useContext(MakeaBLEContext);
+  const [_temp, setTemp] = temperature;
+
   return (
     <Container {...props}>
       <Rect8>
@@ -17,7 +22,7 @@ function TempBox(props) {
             marginLeft: 24
           }}
         ></MaterialCommunityIconsIcon>
-        <LoremIpsum>27</LoremIpsum>
+        <LoremIpsum>{_temp}</LoremIpsum>
       </Rect8>
     </Container>
   );
@@ -44,7 +49,7 @@ const LoremIpsum = styled.span`
   font-size: 21px;
   text-align: center;
   margin-top: 2px;
-  margin-left: 28px;
+  margin-left: 5px;
 `;
 
 export default TempBox;

@@ -17,12 +17,13 @@ function MainWindow(props) {
   const project_name = "Fall-01";
   let history = useHistory ();
 
-  const { allData,
+  const { allData, count,
     currentData, temperature, pressure, light, 
     accel_x, accel_y , accel_z, current_time,
     gyro_x, gyro_y , gyro_z, isRecording } = useContext(MakeaBLEContext);
 
   const [_data, setData] = currentData;
+  const [row_count, setCount] = count;
   const [all_data, setAllData] = allData;
   const [_temp, setTemp] = temperature;
   const [_press, setPress] = pressure;
@@ -41,21 +42,28 @@ function MainWindow(props) {
         download: true,
         header: true,
         complete: data => {
-          setData(data.data); setTemp(data.data[data.data.length-1].TEMPERATURE);
-          setPress(data.data[data.data.length-1].PRESSURE); setLight(data.data[data.data.length-1].AMB_LIGHT);
-          setAccelX(data.data[data.data.length-1].ACCEL_X); setAccelY(data.data[data.data.length-1].ACCEL_Y);
-          setAccelZ(data.data[data.data.length-1].ACCEL_Z); setGyroX(data.data[data.data.length-1].GYRO_X);
-          setGyroY(data.data[data.data.length-1].GYRO_Y); setGyroZ(data.data[data.data.length-1].GYRO_Z);
+          setAllData(data.data);
         }
       });
   }, [])
 
   useEffect(() => {
-    const id = setInterval(() => setDateTime(new Date()), 1000);
+    const id = setInterval(() => {
+      setDateTime(new Date()); setCount(prev => prev + 1);
+      if(is_recording){
+        // If the device is on and user presses "Play", then record the most recent data.
+        setData([..._data, all_data[row_count]]);
+        setTemp(all_data[row_count].TEMPERATURE); setPress(all_data[row_count].PRESSURE); 
+        setLight(all_data[row_count].AMB_LIGHT); setAccelX(all_data[row_count].ACCEL_X); 
+        setAccelY(all_data[row_count].ACCEL_Y); setAccelZ(all_data[row_count].ACCEL_Z); 
+        setGyroX(all_data[row_count].GYRO_X); setGyroY(all_data[row_count].GYRO_Y); 
+        setGyroZ(all_data[row_count].GYRO_Z);
+      }
+    }, 1000);
     return () => {
         clearInterval(id);
     }
-  }, [_data]);
+  }, [count]);
 
   const gotoLabels = () => {
     history.push ('./MainWindowLabels');

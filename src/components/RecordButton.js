@@ -4,26 +4,26 @@ import EntypoIcon from "react-native-vector-icons/dist/Entypo";
 import {MakeaBLEContext} from "../contexts/MakeaBLEContext";
 
 function RecordButton(props) {
-  const { isRecording } = useContext(MakeaBLEContext);
+  const { isRecording, play_icon, play_ellipse } = useContext(MakeaBLEContext);
   const [stillRecording, changeRecordingState] = isRecording;
-  const [icon_name, changeIcon] = useState("controller-play");
-  const [ellipseColor, changeEllipse] = useState("#d1eab8");
+  const [icon_name, changePlayIcon] = play_icon;
+  const [ellipseColor, changeEllipse] = play_ellipse;
 
   function startRecording(){
-    changeRecordingState(true);
+    changeRecordingState(prevState => !prevState);
     if(icon_name === "controller-play"){
-      changeIcon("controller-stop");
+      changePlayIcon("controller-stop");
       changeEllipse("#94C973");
     }
     else{
-      changeIcon("controller-play");
+      changePlayIcon("controller-play");
       changeEllipse("#d1eab8");
     }
   }
 
   return (
-    <Container {...props} onClick={startRecording}>
-      <Ellipse2Stack>
+    <Container {...props} >
+      <Ellipse2Stack onClick={startRecording}>
         <svg
           viewBox="0 0 92 75"
           style={{

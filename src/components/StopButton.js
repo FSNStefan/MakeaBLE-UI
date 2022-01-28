@@ -2,22 +2,31 @@ import React, { Component, useState, useContext } from "react";
 import styled, { css } from "styled-components";
 import EntypoIcon from "react-native-vector-icons/dist/Entypo";
 import {MakeaBLEContext} from "../contexts/MakeaBLEContext";
+import Papa from "papaparse";
+import { saveAs } from 'file-saver';
+
+function downloadCSV(csv){
+  var csvData = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  saveAs(csvData, "dataset.csv");
+}
 
 function StopButton(props) {
-  const { isRecording } = useContext(MakeaBLEContext);
+  const { isRecording, currentData, play_icon, play_ellipse } = useContext(MakeaBLEContext);
   const [stillRecording, changeRecordingState] = isRecording;
+  const [_data, setData] = currentData;
   const [icon_name, changeIcon] = useState("save");
+  const [play_icon_name, changePlayIcon] = play_icon;
   const [ellipseColor, changeEllipse] = useState("rgba(245,204,209,1)");
+  const [play_ellipseColor, changePlayEllipse] = play_ellipse;
 
   function stopRecording(){
-    changeRecordingState(false);
-    if(icon_name === "save"){
-      changeIcon("controller-stop");
-      changeEllipse("#DF362D");
+    if(isRecording){
+      changeRecordingState(false);
+      changePlayIcon("controller-play");
+      changePlayEllipse("#d1eab8")
     }
-    else{
-      changeIcon("save");
-      changeEllipse("rgba(245,204,209,1)");
+    if(_data){
+      downloadCSV(Papa.unparse(_data));
     }
   }
   

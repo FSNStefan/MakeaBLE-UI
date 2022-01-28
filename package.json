@@ -12,6 +12,7 @@
     "@mui/material": "^5.3.0",
     "@syncfusion/ej2-react-splitbuttons": "^19.4.40",
     "canvas-table": "^0.0.8",
+    "file-saver": "^2.0.5",
     "material-ui-slider": "^3.0.8",
     "namor": "^2.0.3",
     "papaparse": "^5.3.1",

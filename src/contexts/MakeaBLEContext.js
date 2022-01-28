@@ -26,6 +26,9 @@ export const MakeaBLEProvider = (props) => {
     const [accel_y, setAccelY] = useState("NAN")
     const [accel_z, setAccelZ] = useState("NAN")
 
+    const [play_icon, changePlayIcon] = useState("controller-play");
+    const [play_ellipseColor, changePlayEllipse] = useState("#d1eab8");
+
     return (
         <MakeaBLEContext.Provider value={
             { 
@@ -38,7 +41,8 @@ export const MakeaBLEProvider = (props) => {
                 pressure: [pressure, setPressure], light: [light, setLight],
                 gyro_x: [gyro_x, setGyroX], gyro_y: [gyro_y, setGyroY],
                 gyro_z: [gyro_z, setGyroZ], accel_x: [accel_x, setAccelX],
-                accel_y: [accel_y, setAccelY], accel_z: [accel_z, setAccelZ]
+                accel_y: [accel_y, setAccelY], accel_z: [accel_z, setAccelZ],
+                play_icon: [play_icon, changePlayIcon], play_ellipse: [play_ellipseColor, changePlayEllipse]
             }
         }>
             {props.children}

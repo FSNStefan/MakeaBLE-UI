@@ -10,22 +10,35 @@ export const MakeaBLEProvider = (props) => {
     const [projTabSelected, changeProjTabState] = useState(true); // Is the project tab selected?
     const [labelTabSelected, changeLabelTabState] = useState(false); // Is data labeling tab selected?
 
+    const [dateTime, setDateTime] = useState(new Date()); // current time
+
     const [currentData, setData] = useState([]) // Data stored from simulation or from "Open Project"
+    const [allData, setAllData] = useState([]) // All data (for UI testing only)
+    
+    // The following are current values from sensors. (Just for ease of management.)
     const [light, setLight] = useState("NAN")
     const [pressure, setPressure] = useState("NAN")
     const [temperature, setTemperature] = useState("NAN")
+    const [gyro_x, setGyroX] = useState("NAN")
+    const [gyro_y, setGyroY] = useState("NAN")
+    const [gyro_z, setGyroZ] = useState("NAN")
+    const [accel_x, setAccelX] = useState("NAN")
+    const [accel_y, setAccelY] = useState("NAN")
+    const [accel_z, setAccelZ] = useState("NAN")
 
     return (
         <MakeaBLEContext.Provider value={
             { 
                 count: [count, setCount], isRecording: [isRecording, changeRecordingState],
-                aiTabSelected: [aiTabSelected, changeAITabState], 
+                aiTabSelected: [aiTabSelected, changeAITabState], allData: [allData, setAllData],
                 projTabSelected: [projTabSelected, changeProjTabState],
                 labelTabSelected: [labelTabSelected, changeLabelTabState],
-                currentData : [currentData, setData],
+                currentData : [currentData, setData], current_time: [dateTime, setDateTime],
                 temperature : [temperature, setTemperature],
-                pressure: [pressure, setPressure],
-                light: [light, setLight]
+                pressure: [pressure, setPressure], light: [light, setLight],
+                gyro_x: [gyro_x, setGyroX], gyro_y: [gyro_y, setGyroY],
+                gyro_z: [gyro_z, setGyroZ], accel_x: [accel_x, setAccelX],
+                accel_y: [accel_y, setAccelY], accel_z: [accel_z, setAccelZ]
             }
         }>
             {props.children}

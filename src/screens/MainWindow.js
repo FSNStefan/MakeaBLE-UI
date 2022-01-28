@@ -17,24 +17,45 @@ function MainWindow(props) {
   const project_name = "Fall-01";
   let history = useHistory ();
 
-  const { currentData, temperature, pressure, light } = useContext(MakeaBLEContext);
+  const { allData,
+    currentData, temperature, pressure, light, 
+    accel_x, accel_y , accel_z, current_time,
+    gyro_x, gyro_y , gyro_z, isRecording } = useContext(MakeaBLEContext);
+
   const [_data, setData] = currentData;
+  const [all_data, setAllData] = allData;
   const [_temp, setTemp] = temperature;
   const [_press, setPress] = pressure;
   const [_light, setLight] = light;
+  const [a_x, setAccelX] = accel_x;
+  const [a_y, setAccelY] = accel_y;
+  const [a_z, setAccelZ] = accel_z;
+  const [g_x, setGyroX] = gyro_x;
+  const [g_y, setGyroY] = gyro_y;
+  const [g_z, setGyroZ] = gyro_z;
+  const [is_recording, setRecording] = isRecording;
+  const [dateTime, setDateTime] = current_time;
 
   useEffect(() => {
     Papa.parse("./Projects/Fall-01/Data/dataset_new.csv", {
         download: true,
         header: true,
         complete: data => {
-          setData(data.data);
-          setTemp(data.data[data.data.length-1].TEMPERATURE);
-          setPress(data.data[data.data.length-1].PRESSURE);
-          setLight(data.data[data.data.length-1].AMB_LIGHT);
+          setData(data.data); setTemp(data.data[data.data.length-1].TEMPERATURE);
+          setPress(data.data[data.data.length-1].PRESSURE); setLight(data.data[data.data.length-1].AMB_LIGHT);
+          setAccelX(data.data[data.data.length-1].ACCEL_X); setAccelY(data.data[data.data.length-1].ACCEL_Y);
+          setAccelZ(data.data[data.data.length-1].ACCEL_Z); setGyroX(data.data[data.data.length-1].GYRO_X);
+          setGyroY(data.data[data.data.length-1].GYRO_Y); setGyroZ(data.data[data.data.length-1].GYRO_Z);
         }
       });
   }, [])
+
+  useEffect(() => {
+    const id = setInterval(() => setDateTime(new Date()), 1000);
+    return () => {
+        clearInterval(id);
+    }
+  }, [_data]);
 
   const gotoLabels = () => {
     history.push ('./MainWindowLabels');

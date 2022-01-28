@@ -1,19 +1,13 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, useEffect, useContext } from "react";
 import styled, { css } from "styled-components";
 import EnvBox from "./EnvBox";
 import ProxSensorBox from "./ProxSensorBox";
+import {MakeaBLEContext} from "../contexts/MakeaBLEContext";
 
 function CurrentDataBox(props) {
-
-  const [dateTime, setDateTime] = useState(new Date());
-
-  useEffect(() => {
-    const id = setInterval(() => setDateTime(new Date()), 1000);
-    return () => {
-        clearInterval(id);
-    }
-  }, []);
-
+  const { current_time } = useContext(MakeaBLEContext);
+  const [dateTime, setDateTime] = current_time;
+  
   return (
     <Container {...props}>
       <Rect6>

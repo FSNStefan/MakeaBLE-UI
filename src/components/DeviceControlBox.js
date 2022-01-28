@@ -4,6 +4,7 @@ import RecordButton from "./RecordButton";
 import StopButton from "./StopButton";
 
 function DeviceControlBox(props) {
+
   return (
     <Container {...props}>
       <Rect5>

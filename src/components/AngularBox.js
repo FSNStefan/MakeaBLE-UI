@@ -1,8 +1,15 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import styled, { css } from "styled-components";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
+import {MakeaBLEContext} from "../contexts/MakeaBLEContext";
 
 function AngularBox(props) {
+
+  const { gyro_x, gyro_y, gyro_z } = useContext(MakeaBLEContext);
+  const [g_x, setGyroX] = gyro_x;
+  const [g_y, setGyroY] = gyro_y;
+  const [g_z, setGyroZ] = gyro_z;
+
   return (
     <Container {...props}>
       <Rect9>
@@ -18,9 +25,9 @@ function AngularBox(props) {
           ></MaterialCommunityIconsIcon>
           <Gyro>GYRO</Gyro>
         </Icon2Row>
-        <X101>X : 1.00</X101>
-        <Y101>Y : 1.00</Y101>
-        <Z1002>Z : 1.00</Z1002>
+        <X101>X : {g_x}</X101>
+        <Y101>Y : {g_y}</Y101>
+        <Z1002>Z : {g_z}</Z1002>
       </Rect9>
     </Container>
   );

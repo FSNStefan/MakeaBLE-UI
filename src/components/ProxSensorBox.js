@@ -4,6 +4,7 @@ import AccelerationBox from "./AccelerationBox";
 import AngularBox from "./AngularBox";
 
 function ProxSensorBox(props) {
+  
   return (
     <Container {...props}>
       <Rect7>

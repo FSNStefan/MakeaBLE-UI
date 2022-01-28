@@ -1,8 +1,15 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import styled, { css } from "styled-components";
 import IoniconsIcon from "react-native-vector-icons/dist/Ionicons";
+import {MakeaBLEContext} from "../contexts/MakeaBLEContext";
 
 function AccelerationBox(props) {
+
+  const { accel_x, accel_y , accel_z } = useContext(MakeaBLEContext);
+  const [a_x, setAccelX] = accel_x;
+  const [a_y, setAccelY] = accel_y;
+  const [a_z, setAccelZ] = accel_z;
+
   return (
     <Container {...props}>
       <Rect8>
@@ -18,9 +25,9 @@ function AccelerationBox(props) {
           ></IoniconsIcon>
           <Accel2>ACCEL</Accel2>
         </IconRow>
-        <X100>X : 1.00</X100>
-        <Y100>Y : 1.00</Y100>
-        <Z100>Z : 1.00</Z100>
+        <X100>X : {a_x}</X100>
+        <Y100>Y : {a_y}</Y100>
+        <Z100>Z : {a_z}</Z100>
       </Rect8>
     </Container>
   );

@@ -7,29 +7,24 @@ import {LabelingContext} from "../contexts/LabelingContext";
 import "react-table-6/react-table.css";
 
 function LabelTable() {
-    const { columns, labelCounts } = useContext(LabelingContext);
+    const { columns, labelCounts, displayedData } = useContext(LabelingContext);
     const [ori_columns, setColumns] = columns;
     const [label_count, setLabelCount] = labelCounts;
+    const [data_to_display, setDisplayedData] = displayedData;
 
     const { currentData } = useContext(MakeaBLEContext);
     const [_data, setData] = currentData;
 
     useEffect(() => {
-        Papa.parse("./Projects/Fall-01/Data/dataset_new.csv", {
-            download: true,
-            header: true,
-            complete: data => {
-              setData(data.data);
-              /*const arr = data.data.map(i => `${i.Time} , ${i.AMB_LIGHT}`); // This is how to access data in each column
-              console.log(arr)*/ 
-            }
-          });
+      if(data_to_display.length != _data.length){
+        setDisplayedData(_data);
+      }
     }, [])
 
     return (
             <div>
             <ReactTable
-                data={_data}
+                data={data_to_display}
                 columns={ori_columns}
                 defaultPageSize={10}
                 style={{

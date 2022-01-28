@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import styled, { css } from "styled-components";
 import ProjectTab from "../components/ProjectTab";
 import LabelTab from "../components/LabelTab";
@@ -11,11 +11,10 @@ import Footer from "../components/Footer";
 import { useHistory } from 'react-router-dom';
 
 import LabelTable from "../components/LabelTable";
-
-import {MakeaBLEProvider} from "../contexts/MakeaBLEContext";
 import {LabelingProvider} from "../contexts/LabelingContext";
 
 function MainWindowLabels(props) {
+  const project_name = "Fall-01";
   let history = useHistory ();
   
   const gotoProj = () => {
@@ -27,12 +26,11 @@ function MainWindowLabels(props) {
   }
 
   return (
-    <MakeaBLEProvider>
     <LabelingProvider>
     <Container>
       <RectColumn>
         <Rect>
-          <ProjectFall01>Project : Fall-01</ProjectFall01>
+          <ProjectFall01>Project : {project_name}</ProjectFall01>
         </Rect>
         <Rect2Row>
           <Rect2>
@@ -109,7 +107,6 @@ function MainWindowLabels(props) {
       ></Footer>
     </Container>
     </LabelingProvider>
-    </MakeaBLEProvider>
   );
 }
 

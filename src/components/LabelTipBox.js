@@ -11,12 +11,11 @@ function addKeyValue(obj, key, data){
 
 function LabelTipBox(props) {
   
-  const { columns, labelCounts } = useContext(LabelingContext);
+  const { columns, labelCounts, displayedData } = useContext(LabelingContext);
   const [ori_columns, setColumns] = columns;
   const [label_count, setLabelCount] = labelCounts;
 
-  const { currentData } = useContext(MakeaBLEContext);
-  const [rows, setRows] = currentData;
+  const [rows, setRows] = displayedData;
 
   const updateMyData = (rowIndex, columnId, value) => {
     setRows(old =>
@@ -30,6 +29,7 @@ function LabelTipBox(props) {
         return row
       })
     )
+    console.log(rows.length)
   }
 
   // Create an editable cell renderer. This is a custom function that we supplied to our table instance.

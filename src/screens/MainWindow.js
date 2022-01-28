@@ -8,16 +8,22 @@ import CurrentDataBox from "../components/CurrentDataBox";
 import Footer from "../components/Footer";
 import { useHistory } from 'react-router-dom';
 import Papa from "papaparse";
+import axios from 'axios';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "../App.css";
 import DataTable from "../components/DataTable";
 import {MakeaBLEContext} from "../contexts/MakeaBLEContext";
 
+toast.configure()
 function MainWindow(props) {
   const project_name = "Fall-01";
   let history = useHistory ();
 
-  const { allData, count,
+  const data_req_url = "http://140.113.87.41:3000/status";
+
+  const { allData, count, device_status, stateColor,
     currentData, temperature, pressure, light, 
     accel_x, accel_y , accel_z, current_time,
     gyro_x, gyro_y , gyro_z, isRecording } = useContext(MakeaBLEContext);
@@ -36,6 +42,8 @@ function MainWindow(props) {
   const [g_z, setGyroZ] = gyro_z;
   const [is_recording, setRecording] = isRecording;
   const [dateTime, setDateTime] = current_time;
+  const [device_state, setDeviceStatus] = device_status;
+  const [state_color, setStateColor] = stateColor;
 
   useEffect(() => {
     Papa.parse("./Projects/Fall-01/Data/dataset_new.csv", {
@@ -45,19 +53,53 @@ function MainWindow(props) {
           setAllData(data.data);
         }
       });
+    axios.get(data_req_url).then(res => {
+      setDeviceStatus(res.data)
+      if(res.data == 1){
+        setStateColor("#7ed322");
+      }
+      else{
+        setStateColor("red");
+      }
+    })
   }, [])
 
   useEffect(() => {
     const id = setInterval(() => {
       setDateTime(new Date()); setCount(prev => prev + 1);
+      axios.get(data_req_url).then(res => {
+        setDeviceStatus(res.data)
+        if(res.data == 1){
+          setStateColor("#7ed322");
+        }
+        else{
+          setStateColor("red");
+        }
+      })
       if(is_recording){
         // If the device is on and user presses "Play", then record the most recent data.
-        setData([..._data, all_data[row_count]]);
-        setTemp(all_data[row_count].TEMPERATURE); setPress(all_data[row_count].PRESSURE); 
-        setLight(all_data[row_count].AMB_LIGHT); setAccelX(all_data[row_count].ACCEL_X); 
-        setAccelY(all_data[row_count].ACCEL_Y); setAccelZ(all_data[row_count].ACCEL_Z); 
-        setGyroX(all_data[row_count].GYRO_X); setGyroY(all_data[row_count].GYRO_Y); 
-        setGyroZ(all_data[row_count].GYRO_Z);
+        if(device_state){
+          setTemp(all_data[row_count].TEMPERATURE); setPress(all_data[row_count].PRESSURE); 
+          setLight(all_data[row_count].AMB_LIGHT); setAccelX(all_data[row_count].ACCEL_X); 
+          setAccelY(all_data[row_count].ACCEL_Y); setAccelZ(all_data[row_count].ACCEL_Z); 
+          setGyroX(all_data[row_count].GYRO_X); setGyroY(all_data[row_count].GYRO_Y); 
+          setGyroZ(all_data[row_count].GYRO_Z);
+          setData([..._data, {
+            "Time": dateTime.getHours() + ':' + dateTime.getMinutes() + ':' + dateTime.getSeconds(),
+            "AMB_LIGHT": all_data[row_count].AMB_LIGHT,
+            "PRESSURE": all_data[row_count].PRESSURE,
+            "TEMPERATURE": all_data[row_count].TEMPERATURE,
+            "ACCEL_X": all_data[row_count].ACCEL_X,
+            "ACCEL_Y": all_data[row_count].ACCEL_Y,
+            "ACCEL_Z": all_data[row_count].ACCEL_Z,
+            "GYRO_X": all_data[row_count].GYRO_X,
+            "GYRO_Y": all_data[row_count].GYRO_Y,
+            "GYRO_Z": all_data[row_count].GYRO_Z,
+          }])
+        }
+        else{
+          toast.error("The device is off!");
+        }
       }
     }, 1000);
     return () => {

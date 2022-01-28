@@ -1,9 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, useState, useContext } from "react";
 import styled, { css } from "styled-components";
 import RecordButton from "./RecordButton";
 import StopButton from "./StopButton";
+import {MakeaBLEContext} from "../contexts/MakeaBLEContext";
 
 function DeviceControlBox(props) {
+
+  const { stateColor } = useContext(MakeaBLEContext);
+  const [state_color, setStateColot] = stateColor;
 
   return (
     <Container {...props}>
@@ -19,7 +23,7 @@ function DeviceControlBox(props) {
             <ellipse
               stroke="rgba(230, 230, 230,1)"
               strokeWidth={0}
-              fill="#7ed322"
+              fill={state_color}
               cx={18}
               cy={18}
               rx={18}

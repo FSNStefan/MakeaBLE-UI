@@ -5,6 +5,7 @@ export const LabelingContext = createContext();
 export const LabelingProvider = (props) => {
 
     const [label_count, setLabelCount] = useState(1)
+    const [displayedData, setDisplayedData] = useState([])
     const [columns, setColumns] = useState([
         { Header: "Time", accessor: "Time"},
         { Header: "AMB_LIGHT", accessor: "AMB_LIGHT"},
@@ -21,7 +22,8 @@ export const LabelingProvider = (props) => {
     return (
         <LabelingContext.Provider value={
             { 
-                labelCounts: [label_count, setLabelCount], columns: [columns, setColumns]
+                labelCounts: [label_count, setLabelCount], columns: [columns, setColumns],
+                displayedData: [displayedData, setDisplayedData]
             }
         }>
             {props.children}
